@@ -45,6 +45,11 @@ We received many complaints about how Swift Package Manager version 4 slow down 
 
 ## Quick Start
 
+### Note
+
+This script requires `wget`, please do `brew install wget` or `sudo apt-get install -y wget` before using.
+
+
 ### Install
 
 Open a terminal then execute the following script to it.
