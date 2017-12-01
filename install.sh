@@ -6,38 +6,38 @@ mkdir -p $HUB
 
 function mirror_ex() {
 	cd /tmp/perfect
-	VERSION=$1
-	REPONAME=$2
-	wget -O /tmp/a.tgz "https://github.com/$3/$REPONAME/archive/$VERSION.tar.gz"
+	REPO=$1
+	VEND=$2
+	RELEASES=$VEND/$REPO/releases
+	TAGS=/$RELEASES/tag/
+	GITHUB=https://github.com
+	LATEST=$(curl -s $GITHUB/$RELEASES | grep $TAGS | head -n 1 | sed 's/[-|\ |\"|\=|\<|\>|\/|a-z|A-Z]//g')
+	echo "Caching $VEND/$REPO:$LATEST"
+	curl -s -L "$GITHUB/$VEND/$REPO/archive/$LATEST.tar.gz" -o /tmp/a.tgz
 	tar xzf /tmp/a.tgz
 	rm -rf /tmp/a.tgz
-	mv $REPONAME-$VERSION $REPONAME
-	cd $REPONAME
+	mv $REPO-$LATEST $REPO
+	cd $REPO
 }
 
 function mirror() {
-	mirror_ex $1 $2 PerfectlySoft
+	mirror_ex $1 PerfectlySoft
 }
 
 function reversion() {
-	VERSION=$1
 	rm -rf .git
-	git init
-	git add *
-	git commit -m "slim"
-	latest=$(git log|awk '$1=="commit" {print $2}')
-	git tag $VERSION $latest
+	git init >> /dev/null
+	git add *  >> /dev/null
+	git commit -m "slim"  >> /dev/null
+	VERSION=$(git log|awk '$1=="commit" {print $2}')
+	git tag $LATEST $VERSION  >> /dev/null
 }
 
-# LinuxBridge
-VER=3.0.0
-mirror $VER Perfect-LinuxBridge
-reversion $VER
+mirror Perfect-LinuxBridge
+reversion
 
-# PerfectLib
-VER=3.0.2
-mirror $VER Perfect
-tee Package.swift << EOF
+mirror Perfect
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 var urls = [String]()
 #if os(Linux)
@@ -48,22 +48,16 @@ let package = Package(
 	dependencies: urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-COpenSSL
-VER=3.1.2
-mirror $VER Perfect-COpenSSL
-reversion $VER
+mirror Perfect-COpenSSL
+reversion
 
-# Perfect-COpenSSL-Linux
-VER=3.0.1
-mirror $VER Perfect-COpenSSL-Linux
-reversion $VER
+mirror Perfect-COpenSSL-Linux
+reversion
 
-# Perfect-Perfect-Thread
-VER=3.0.2
-mirror $VER Perfect-Thread
-tee Package.swift << EOF
+mirror Perfect-Thread
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 var urls = [String]()
 #if os(Linux)
@@ -74,13 +68,11 @@ let package = Package(
 	dependencies: urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-Crypto
-VER=3.0.2
-mirror $VER Perfect-Crypto
-reversion $VER
-tee Package.swift << EOF
+mirror Perfect-Crypto
+reversion
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 #if os(Linux)
 	let cOpenSSLRepo = "$HUB/Perfect-COpenSSL-Linux"
@@ -95,13 +87,11 @@ let package = Package( name: "PerfectCrypto", targets: [],
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-Net
-VER=3.0.0
-mirror $VER Perfect-Net
-reversion $VER
-tee Package.swift << EOF
+mirror Perfect-Net
+reversion
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 var urls: [String] = ["$HUB/Perfect-Crypto", "$HUB/Perfect-Thread"]
 #if os(Linux)
@@ -112,13 +102,11 @@ let package = Package(
     dependencies:  urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-HTTP
-VER=3.0.1
-mirror $VER Perfect-HTTP
-reversion $VER
-tee Package.swift << EOF
+mirror Perfect-HTTP
+reversion
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 var urls: [String] = ["$HUB/Perfect", "$HUB/Perfect-Net"]
 #if os(Linux)
@@ -129,15 +117,13 @@ let package = Package(
     dependencies:  urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-CZlib-src
-VER=0.0.3
-mirror $VER Perfect-CZlib-src
+mirror Perfect-CZlib-src
 cd PerfectCZlib
 rm -rf amiga contrib doc examples msdoc nintendods old os400 qnx test watcom win32
 cd ..
-tee Package.swift << EOF
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
     name: "PerfectCZlib", targets: [],
@@ -145,13 +131,10 @@ let package = Package(
  		exclude: ["contrib", "test", "examples"]
 )
 EOF
-reversion $VER
+reversion
 
-
-# Perfect-HTTPServer
-VER=3.0.3
-mirror $VER Perfect-HTTPServer
-tee Package.swift << EOF
+mirror Perfect-HTTPServer
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectHTTPServer",
@@ -166,17 +149,13 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-libcurl
-VER=2.0.6
-mirror $VER Perfect-libcurl
-reversion $VER
+mirror Perfect-libcurl
+reversion
 
-# Perfect-CURL
-VER=3.0.1
-mirror $VER Perfect-CURL
-tee Package.swift << EOF
+mirror Perfect-CURL
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectCURL",
@@ -187,18 +166,14 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# SwiftMoment
-VER=1.0.0
-mirror_ex $VER SwiftMoment iamjono
+mirror_ex SwiftMoment iamjono
 rm -rf *.playground *.xcodeproj Tests *.md
-reversion $VER
+reversion
 
-# Perfect-Logger
-VER=3.0.0
-mirror $VER Perfect-Logger
-tee Package.swift << EOF
+mirror Perfect-Logger
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectLogger",
@@ -210,12 +185,10 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# JSONConfig
-VER=3.0.0
-mirror_ex $VER JSONConfig iamjono
-tee Package.swift << EOF
+mirror_ex JSONConfig iamjono
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
     name: "JSONConfig",
@@ -225,17 +198,13 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# SwiftRandom
-VER=0.2.5
-mirror_ex $VER SwiftRandom iamjono
-reversion $VER
+mirror_ex SwiftRandom iamjono
+reversion
 
-# Perfect-RequestLogger
-VER=3.0.0
-mirror $VER Perfect-RequestLogger
-tee Package.swift << EOF
+mirror Perfect-RequestLogger
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectRequestLogger",
@@ -247,12 +216,10 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-Mustache
-VER=3.0.1
-mirror $VER Perfect-Mustache
-tee Package.swift << EOF
+mirror Perfect-Mustache
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectMustache",
@@ -262,12 +229,10 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
-# Perfect-SMTP
-VER=3.0.1
-mirror $VER Perfect-SMTP
-tee Package.swift << EOF
+mirror Perfect-SMTP
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
     name: "PerfectSMTP", dependencies: [
@@ -275,12 +240,32 @@ let package = Package(
   ]
 )
 EOF
-reversion $VER
+reversion
 
-# PerfectTemplate
-VER=3.0.0
-mirror $VER PerfectTemplate
-tee Package.swift << EOF
+mirror Perfect-libpq
+reversion
+
+mirror Perfect-libpq-linux
+reversion
+
+mirror Perfect-PostgreSQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(OSX)
+let url = "$HUB/Perfect-libpq"
+#else
+let url = "$HUB/Perfect-libpq-linux"
+#endif
+let package = Package(
+    name: "PerfectPostgreSQL", targets: [],
+    dependencies: [
+        .Package(url: url, majorVersion: 2)
+    ])
+EOF
+reversion
+
+mirror PerfectTemplate
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "PerfectTemplate",
@@ -290,7 +275,7 @@ let package = Package(
 	]
 )
 EOF
-reversion $VER
+reversion
 
 # Clean up
 popd
