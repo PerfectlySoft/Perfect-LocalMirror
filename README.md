@@ -86,7 +86,6 @@ Then the server building speed will be completely different now. Have fun!
 
 Now these components are available on local repo `/tmp/perfect` as the above fashion:
 
-|&nbsp;|&nbsp;|&nbsp;|&nbsp;|
 |------|------|------|------|
 |LinuxBridge|PerfectLib|Perfect-COpenSSL|Perfect-COpenSSL-Linux|
 |Perfect-Perfect-Thread|Perfect-Crypto|Perfect-Net|Perfect-HTTP|
