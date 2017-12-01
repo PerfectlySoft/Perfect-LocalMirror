@@ -57,7 +57,7 @@ Open a terminal then execute the following script to it.
 
 ```
 git clone https://github.com/RockfordWei/Perfect-Light.git && \
-./Perfect-Light/install.sh
+./Perfect-Light/install.sh && rm -rf Perfect-Light/
 ```
 
 ### Usage
@@ -81,6 +81,32 @@ Then the server building speed will be completely different now. Have fun!
 现在服务器编译速度肯定大不相同了，请尽情尝试：
 
 `cd /tmp/perfect/PerfectTemplate && swift run`
+
+## Local Cache Path
+
+Now these components are available on local repo `/tmp/perfect` as the above fashion:
+
+- LinuxBridge
+- PerfectLib
+- Perfect-COpenSSL
+- Perfect-COpenSSL-Linux
+- Perfect-Perfect-Thread
+- Perfect-Crypto
+- Perfect-Net
+- Perfect-HTTP
+- Perfect-CZlib-src
+- Perfect-HTTPServer
+- Perfect-libcurl
+- Perfect-CURL
+- SwiftMoment
+- Perfect-Logger
+- JSONConfig
+- SwiftRandom
+- Perfect-RequestLogger
+- Perfect-Mustache
+- Perfect-SMTP
+- PerfectTemplate
+
 
 ## Issues
 

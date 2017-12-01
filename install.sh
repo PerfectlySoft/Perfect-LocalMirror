@@ -4,17 +4,19 @@ pushd .
 rm -rf $HUB
 mkdir -p $HUB
 
-function mirror() {
+function mirror_ex() {
 	cd /tmp/perfect
-	PERFECT="https://github.com/PerfectlySoft/"
 	VERSION=$1
 	REPONAME=$2
-	REPO="$PERFECT/$REPONAME/archive/$VERSION.tar.gz"
-	wget -O /tmp/a.tgz "$REPO"
+	wget -O /tmp/a.tgz "https://github.com/$3/$REPONAME/archive/$VERSION.tar.gz"
 	tar xzf /tmp/a.tgz
 	rm -rf /tmp/a.tgz
 	mv $REPONAME-$VERSION $REPONAME
 	cd $REPONAME
+}
+
+function mirror() {
+	mirror_ex $1 $2 PerfectlySoft
 }
 
 function reversion() {
@@ -162,6 +164,115 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CZlib-src", majorVersion: 0)
 	]
+)
+EOF
+reversion $VER
+
+# Perfect-libcurl
+VER=2.0.6
+mirror $VER Perfect-libcurl
+reversion $VER
+
+# Perfect-CURL
+VER=3.0.1
+mirror $VER Perfect-CURL
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+	name: "PerfectCURL",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-libcurl", majorVersion: 2),
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+	]
+)
+EOF
+reversion $VER
+
+# SwiftMoment
+VER=1.0.0
+mirror_ex $VER SwiftMoment iamjono
+rm -rf *.playground *.xcodeproj Tests *.md
+reversion $VER
+
+# Perfect-Logger
+VER=3.0.0
+mirror $VER Perfect-Logger
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+	name: "PerfectLogger",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect", majorVersion: 3),
+		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
+		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
+	]
+)
+EOF
+reversion $VER
+
+# JSONConfig
+VER=3.0.0
+mirror_ex $VER JSONConfig iamjono
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+    name: "JSONConfig",
+    targets: [],
+    dependencies: [
+        .Package(url: "$HUB/Perfect", majorVersion: 3)
+	]
+)
+EOF
+reversion $VER
+
+# SwiftRandom
+VER=0.2.5
+mirror_ex $VER SwiftRandom iamjono
+reversion $VER
+
+# Perfect-RequestLogger
+VER=3.0.0
+mirror $VER Perfect-RequestLogger
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+	name: "PerfectRequestLogger",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+	]
+)
+EOF
+reversion $VER
+
+# Perfect-Mustache
+VER=3.0.1
+mirror $VER Perfect-Mustache
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+	name: "PerfectMustache",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+	]
+)
+EOF
+reversion $VER
+
+# Perfect-SMTP
+VER=3.0.1
+mirror $VER Perfect-SMTP
+tee Package.swift << EOF
+import PackageDescription
+let package = Package(
+    name: "PerfectSMTP", dependencies: [
+    .Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
+  ]
 )
 EOF
 reversion $VER
