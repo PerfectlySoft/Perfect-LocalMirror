@@ -51,4 +51,4 @@ rm -rf *.pins
 time swift run
 popd
 
-#rm -rf /tmp/swtest
+rm -rf /tmp/swtest
