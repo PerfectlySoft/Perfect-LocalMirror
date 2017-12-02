@@ -39,7 +39,7 @@
     </a>
 </p>
 
-We received many complaints about how Swift Package Manager version 4 slow down the building process, so here is an example of cheating sheet.
+We received many complaints about how Swift Package Manager version 4 was slowing down the building process, so here is an example of cheating sheet - to speed it up.
 
 我们收到大量关于Swift 4 SPM 软件包管理器速度过慢的投诉，因此本项目用于Perfect编译加速
 
