@@ -92,7 +92,7 @@ Now these components are available on local repo `/tmp/perfect` as the above fas
 |Perfect-Perfect-Thread|Perfect-Crypto|Perfect-Net|Perfect-HTTP|
 |Perfect-CZlib-src|Perfect-HTTPServer|Perfect-libcurl|Perfect-CURL|
 |SwiftMoment|Perfect-Logger|JSONConfig|SwiftRandom|Perfect-RequestLogger|
-|Perfect-Mustache|Perfect-SMTP|PerfectTemplate|&nbsp;|
+|Perfect-Mustache|Perfect-SMTP|Perfect-PostgreSQL|Perfect-SQLite|
 
 
 ## Issues

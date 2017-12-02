@@ -11,7 +11,8 @@ function mirror_ex() {
 	RELEASES=$VEND/$REPO/releases
 	TAGS=/$RELEASES/tag/
 	GITHUB=https://github.com
-	LATEST=$(curl -s $GITHUB/$RELEASES | grep $TAGS | head -n 1 | sed 's/[-|\ |\"|\=|\<|\>|\/|a-z|A-Z]//g')
+	LATEST=$(curl -s $GITHUB/$RELEASES | grep $TAGS | head -n 1 | \
+	sed $'s/[\"|\/]/\\\n/g' | egrep '[0-9]+.[0-9]+.[0-9]')
 	echo "Caching $VEND/$REPO:$LATEST"
 	curl -s -L "$GITHUB/$VEND/$REPO/archive/$LATEST.tar.gz" -o /tmp/a.tgz
 	tar xzf /tmp/a.tgz
@@ -260,6 +261,20 @@ let package = Package(
     name: "PerfectPostgreSQL", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2)
+    ])
+EOF
+reversion
+
+mirror Perfect-sqlite3-support
+reversion
+
+mirror Perfect-SQLite
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+    name: "PerfectSQLite", targets: [],
+    dependencies: [
+        .Package(url: "$HUB/Perfect-sqlite3-support", majorVersion: 3)
     ])
 EOF
 reversion
