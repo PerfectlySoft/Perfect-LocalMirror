@@ -75,10 +75,10 @@ mirror Perfect-Crypto
 reversion
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-#if os(Linux)
-	let cOpenSSLRepo = "$HUB/Perfect-COpenSSL-Linux"
-#else
+#if os(OSX)
 	let cOpenSSLRepo = "$HUB/Perfect-COpenSSL"
+#else
+	let cOpenSSLRepo = "$HUB/Perfect-COpenSSL-Linux"
 #endif
 let package = Package( name: "PerfectCrypto", targets: [],
     dependencies: [
@@ -275,6 +275,28 @@ let package = Package(
     name: "PerfectSQLite", targets: [],
     dependencies: [
         .Package(url: "$HUB/Perfect-sqlite3-support", majorVersion: 3)
+    ])
+EOF
+reversion
+
+mirror Perfect-mysqlclient
+reversion
+
+mirror Perfect-mysqlclient-Linux
+reversion
+
+mirror Perfect-MySQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(OSX)
+let url = "$HUB/Perfect-mysqlclient"
+#else
+let url = "$HUB/Perfect-mysqlclient-Linux"
+#endif
+let package = Package(
+    name: "PerfectMySQL", targets: [],
+    dependencies: [
+        .Package(url: url, majorVersion: 2)
     ])
 EOF
 reversion

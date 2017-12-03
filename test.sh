@@ -16,6 +16,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SQLite", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
@@ -34,6 +35,7 @@ import PerfectSMTP
 import PerfectMustache
 import PerfectPostgreSQL
 import PerfectSQLite
+import PerfectMySQL
 import SwiftMoment
 import SwiftRandom
 import JSONConfig
