@@ -12,7 +12,7 @@ function mirror_ex() {
 	TAGS=/$RELEASES/tag/
 	GITHUB=https://github.com
 	LATEST=$(curl -s $GITHUB/$RELEASES | grep $TAGS | head -n 1 | \
-	sed $'s/[\"|\/]/\\\n/g' | egrep '[0-9]+.[0-9]+.[0-9]')
+	sed $'s/[\"|\<|\>|\/]/\\\n/g' | egrep '[0-9]+.[0-9]+.[0-9]' | head -n 1)
 	echo "Caching $VEND/$REPO:$LATEST"
 	curl -s -L "$GITHUB/$VEND/$REPO/archive/$LATEST.tar.gz" -o /tmp/a.tgz
 	tar xzf /tmp/a.tgz
@@ -295,6 +295,28 @@ let url = "$HUB/Perfect-mysqlclient-Linux"
 #endif
 let package = Package(
     name: "PerfectMySQL", targets: [],
+    dependencies: [
+        .Package(url: url, majorVersion: 2)
+    ])
+EOF
+reversion
+
+mirror Perfect-mariadbclient
+reversion
+
+mirror Perfect-mariadbclient-Linux
+reversion
+
+mirror Perfect-MariaDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(OSX)
+let url = "$HUB/Perfect-mariadbclient"
+#else
+let url = "$HUB/Perfect-mariadbclient-Linux"
+#endif
+let package = Package(
+    name: "MariaDB", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2)
     ])
