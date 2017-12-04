@@ -482,6 +482,36 @@ let package = Package( name: "PerfectNotifications", dependencies:[
 EOF
 reversion
 
+mirror Perfect-Session
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectSession",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+	]
+)
+EOF
+reversion
+
+mirror Perfect-Session-MySQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectSessionMySQL",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
+	]
+)
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
