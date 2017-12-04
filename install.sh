@@ -413,12 +413,24 @@ mirror Perfect-CouchDB
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
-	name: "PerfectCouchDB",
-	targets: [],
+	name: "PerfectCouchDB", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+	]
+)
+EOF
+reversion
+
+mirror Perfect-Hadoop
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectHadoop", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
 	]
 )
 EOF
