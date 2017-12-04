@@ -323,6 +323,56 @@ let package = Package(
 EOF
 reversion
 
+mirror Perfect-Redis
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+    name: "PerfectRedis", targets: [],
+    dependencies: [
+        .Package(url: "$HUB/Perfect-Net", majorVersion: 3)
+    ])
+EOF
+reversion
+
+mirror Perfect-mongo-c
+pushd .
+MONGOC_VER=$(brew info mongo-c-driver|awk '$1=="mongo-c-driver:" {print $3}')
+cd /usr/local/include
+ln -s /usr/local/Cellar/mongo-c-driver/$MONGOC_VER/include/libmongoc-1.0
+ln -s /usr/local/Cellar/mongo-c-driver/$MONGOC_VER/include/libbson-1.0
+popd
+reversion
+
+mirror Perfect-mongo-c-linux
+tee module.modulemap << EOF >> /dev/null
+module libmongoc {
+    header "/usr/include/libbson-1.0/bson.h"
+    header "/usr/include/libmongoc-1.0/mongoc.h"
+    link "mongoc-1.0"
+    export *
+}
+EOF
+reversion
+
+mirror Perfect-MongoDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(OSX)
+let url = "$HUB/Perfect-mongo-c"
+#else
+let url = "$HUB/Perfect-mongo-c-linux"
+#endif
+let package = Package(
+name: "PerfectMongoDB",
+    targets: [],
+    dependencies: [
+        .Package(url: url, majorVersion: 2),
+        .Package(url: "$HUB/Perfect", majorVersion: 3)
+    ],
+    exclude: ["Sources/libmongoc"])
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
