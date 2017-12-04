@@ -28,6 +28,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-FileMaker", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-MySQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-Redis", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
@@ -64,6 +65,7 @@ import PerfectHadoop
 import PerfectWebSockets
 import PerfectWebRedirects
 import PerfectSessionMySQL
+import PerfectSessionPostgreSQL
 import PerfectSessionRedis
 import PerfectZip
 import MariaDB
