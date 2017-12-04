@@ -512,6 +512,20 @@ let package = Package(
 EOF
 reversion
 
+mirror Perfect-Session-Redis
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectSessionRedis",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Redis", majorVersion: 3),
+	]
+)
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
