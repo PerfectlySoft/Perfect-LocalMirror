@@ -463,6 +463,19 @@ let package = Package(
 EOF
 reversion
 
+mirror Perfect-WebRedirects
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectWebRedirects", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2)
+	]
+)
+EOF
+reversion
 
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
@@ -480,4 +493,4 @@ reversion
 # Clean up
 popd
 
-
+printf "\n\x1b[1mNow Perfect local repos are ready: /tmp/perfect\x1b[0m\n"
