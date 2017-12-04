@@ -39,7 +39,7 @@
     </a>
 </p>
 
-We received many complaints about how slow Swift Package Manager version 4 was, so here is an example of cheating sheet - to accelerate your Perfect App by caching all heavily dependencies.
+We received many complaints about how slow Swift Package Manager version 4 was, so here is an example of cheating sheet - to accelerate your Perfect App by caching all heavy dependencies.
 
 我们收到大量关于Swift 4 SPM 软件包管理器速度过慢的投诉，因此本项目用于Perfect编译加速
 
@@ -51,7 +51,7 @@ Open a terminal then execute the following script to it.
 打开终端执行下列命令：
 
 ```
-git clone https://github.com/RockfordWei/Perfect-Light.git && \
+git clone https://github.com/PerfectlySoft/Perfect-Light.git && \
 ./Perfect-Light/install.sh && rm -rf Perfect-Light/
 ```
 
@@ -81,6 +81,10 @@ Then the server building speed will be completely different now.
 ## Local Cache Path
 
 Now these components are available on local repo `/tmp/perfect` as the above fashion:
+目前可以使用的本地模块包括：
+
+(a full example can be found on `test.sh` script)
+(完整的调用样例可以参考 `test.sh` 脚本)
 
 PerfectLib|PerfectHTTP|PerfectHTTPServer|PerfectThread
 ----------|-----------|-----------------|--------------
@@ -137,7 +141,7 @@ reversion
 
 You can add as many components as possible to the script. Have fun!
 
-您可以尽情按照上述风格自行追加需要的 Swift 组件，慢用！
+您可以尽情按照上述风格自行向脚本追加需要的 Swift 组件，慢用！
 
 ## Issues
 
