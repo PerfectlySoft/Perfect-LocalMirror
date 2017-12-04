@@ -35,6 +35,12 @@ let package = Package(
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/SQLite-StORM", majorVersion: 3),
+		.Package(url: "$HUB/CouchDB-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
+		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
+		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
 	]
 )
@@ -73,6 +79,12 @@ import SwiftMoment
 import SwiftRandom
 import SwiftString
 import JSONConfig
+import StORM
+import SQLiteStORM
+import CouchDBStORM
+import PostgresStORM
+import MySQLStORM
+import MongoDBStORM
 print("Hello, Perfect!")
 EOF
 

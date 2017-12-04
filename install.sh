@@ -482,12 +482,83 @@ let package = Package( name: "PerfectNotifications", dependencies:[
 EOF
 reversion
 
+mirror_ex StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "StORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror_ex SQLite-StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "SQLiteStORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-SQLite", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror_ex MySQL-StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "MySQLStORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror_ex MongoDB-StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "MongoDBStORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-MongoDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
+	])
+EOF
+reversion
+
+mirror_ex CouchDB-StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "CouchDBStORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
+	])
+EOF
+reversion
+
+mirror_ex Postgres-StORM SwiftORM
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "PostgresStORM", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-XML", majorVersion: 3)
+	])
+EOF
+reversion
+
 mirror Perfect-Session
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectSession",
-	targets: [],
+let package = Package( name: "PerfectSession", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
