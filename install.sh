@@ -44,8 +44,7 @@ var urls = [String]()
 #if os(Linux)
 urls += ["$HUB/Perfect-LinuxBridge"]
 #endif
-let package = Package(
-	name: "PerfectLib",	targets: [],
+let package = Package(name: "PerfectLib",	targets: [],
 	dependencies: urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
@@ -64,8 +63,7 @@ var urls = [String]()
 #if os(Linux)
 urls += ["$HUB/Perfect-LinuxBridge"]
 #endif
-let package = Package(
-	name: "PerfectThread",	targets: [],
+let package = Package(name: "PerfectThread",	targets: [],
 	dependencies: urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
@@ -85,8 +83,7 @@ let package = Package( name: "PerfectCrypto", targets: [],
 		.Package(url: "$HUB/Perfect", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Thread", majorVersion: 3),
 		.Package(url: cOpenSSLRepo, majorVersion: 3)
-	]
-)
+	])
 EOF
 reversion
 
@@ -98,8 +95,7 @@ var urls: [String] = ["$HUB/Perfect-Crypto", "$HUB/Perfect-Thread"]
 #if os(Linux)
 	urls += ["$HUB/Perfect-LinuxBridge"]
 #endif
-let package = Package(
-    name: "PerfectNet", targets: [],
+let package = Package(name: "PerfectNet", targets: [],
     dependencies:  urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
@@ -113,8 +109,7 @@ var urls: [String] = ["$HUB/Perfect", "$HUB/Perfect-Net"]
 #if os(Linux)
 	urls += ["$HUB/Perfect-LinuxBridge"]
 #endif
-let package = Package(
-    name: "PerfectHTTP", targets: [],
+let package = Package(name: "PerfectHTTP", targets: [],
     dependencies:  urls.map { .Package(url: \$0, majorVersion: 3) }
 )
 EOF
@@ -123,8 +118,7 @@ reversion
 mirror Perfect-WebSockets
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectWebSockets", targets: [],
+let package = Package(name: "PerfectWebSockets", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Crypto", majorVersion: 3),
@@ -138,9 +132,7 @@ rm -rf amiga contrib doc examples msdoc nintendods old os400 qnx test watcom win
 cd ..
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-    name: "PerfectCZlib", targets: [],
-    dependencies:  [],
+let package = Package(name: "PerfectCZlib", targets: [],dependencies:  [],
  		exclude: ["contrib", "test", "examples"]
 )
 EOF
@@ -149,8 +141,7 @@ reversion
 mirror Perfect-Zip
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectZip", targets: [
+let package = Package(name: "PerfectZip", targets: [
 		Target(name: "minizip", dependencies: []),
 		Target(name: "PerfectZip", dependencies: ["minizip"]),
 	],
@@ -164,8 +155,7 @@ reversion
 mirror Perfect-HTTPServer
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectHTTPServer",
+let package = Package(name: "PerfectHTTPServer",
 	targets: [
 		Target(name: "PerfectCHTTPParser", dependencies: []),
 		Target(name: "PerfectHTTPServer", dependencies: ["PerfectCHTTPParser"]),
@@ -174,8 +164,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-Net", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CZlib-src", majorVersion: 0)
-	]
-)
+	])
 EOF
 reversion
 
@@ -185,14 +174,11 @@ reversion
 mirror Perfect-CURL
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectCURL",
-	targets: [],
+let package = Package(name: "PerfectCURL", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-libcurl", majorVersion: 2),
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
-	]
-)
+	])
 EOF
 reversion
 
@@ -203,28 +189,22 @@ reversion
 mirror Perfect-Logger
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectLogger",
-	targets: [],
+let package = Package(name: "PerfectLogger",targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect", majorVersion: 3),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
-	]
-)
+	])
 EOF
 reversion
 
 mirror_ex JSONConfig iamjono
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-    name: "JSONConfig",
-    targets: [],
+let package = Package(name: "JSONConfig", targets: [],
     dependencies: [
         .Package(url: "$HUB/Perfect", majorVersion: 3)
-	]
-)
+	])
 EOF
 reversion
 
@@ -234,39 +214,31 @@ reversion
 mirror Perfect-RequestLogger
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectRequestLogger",
-	targets: [],
+let package = Package(name: "PerfectRequestLogger", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
-	]
-)
+	])
 EOF
 reversion
 
 mirror Perfect-Mustache
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectMustache",
-	targets: [],
+let package = Package(name: "PerfectMustache", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
-	]
-)
+	])
 EOF
 reversion
 
 mirror Perfect-SMTP
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-    name: "PerfectSMTP", dependencies: [
+let package = Package(name: "PerfectSMTP", dependencies: [
     .Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
-  ]
-)
+  ])
 EOF
 reversion
 
@@ -284,8 +256,7 @@ let url = "$HUB/Perfect-libpq"
 #else
 let url = "$HUB/Perfect-libpq-linux"
 #endif
-let package = Package(
-    name: "PerfectPostgreSQL", targets: [],
+let package = Package(name: "PerfectPostgreSQL", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2)
     ])
@@ -298,8 +269,7 @@ reversion
 mirror Perfect-SQLite
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-    name: "PerfectSQLite", targets: [],
+let package = Package(name: "PerfectSQLite", targets: [],
     dependencies: [
         .Package(url: "$HUB/Perfect-sqlite3-support", majorVersion: 3)
     ])
@@ -320,8 +290,7 @@ let url = "$HUB/Perfect-mysqlclient"
 #else
 let url = "$HUB/Perfect-mysqlclient-Linux"
 #endif
-let package = Package(
-    name: "PerfectMySQL", targets: [],
+let package = Package(name: "PerfectMySQL", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2)
     ])
@@ -342,8 +311,7 @@ let url = "$HUB/Perfect-mariadbclient"
 #else
 let url = "$HUB/Perfect-mariadbclient-Linux"
 #endif
-let package = Package(
-    name: "MariaDB", targets: [],
+let package = Package(name: "MariaDB", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2)
     ])
@@ -353,8 +321,7 @@ reversion
 mirror Perfect-Redis
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-    name: "PerfectRedis", targets: [],
+let package = Package(name: "PerfectRedis", targets: [],
     dependencies: [
         .Package(url: "$HUB/Perfect-Net", majorVersion: 3)
     ])
@@ -390,8 +357,7 @@ let url = "$HUB/Perfect-mongo-c"
 let url = "$HUB/Perfect-mongo-c-linux"
 #endif
 let package = Package(
-name: "PerfectMongoDB",
-    targets: [],
+name: "PerfectMongoDB", targets: [],
     dependencies: [
         .Package(url: url, majorVersion: 2),
         .Package(url: "$HUB/Perfect", majorVersion: 3)
@@ -410,8 +376,7 @@ reversion
 mirror Perfect-CouchDB
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectCouchDB", targets: [],
+let package = Package(name: "PerfectCouchDB", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
@@ -424,8 +389,7 @@ reversion
 mirror Perfect-Hadoop
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectHadoop", targets: [],
+let package = Package(name: "PerfectHadoop", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
@@ -437,8 +401,7 @@ reversion
 mirror Perfect-WebRedirects
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectWebRedirects", targets: [],
+let package = Package(name: "PerfectWebRedirects", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
@@ -479,6 +442,71 @@ import PackageDescription
 let package = Package( name: "PerfectNotifications", dependencies:[
       .Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3)
     ])
+EOF
+reversion
+
+mirror Perfect-libSASL
+reversion
+
+mirror_ex Perfect-ICONV PerfectSideRepos
+reversion
+
+mirror Perfect-OpenLDAP
+reversion
+
+mirror Perfect-LDAP
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectLDAP", targets: [], 
+		dependencies: [
+        .Package(url: "$HUB/Perfect-ICONV", majorVersion: 3),
+        .Package(url: "$HUB/Perfect-libSASL", majorVersion: 1),
+        .Package(url: "$HUB/Perfect-OpenLDAP", majorVersion: 1)
+    ])
+EOF
+reversion
+
+mirror Perfect-Markdown
+reversion
+
+mirror Perfect-Python
+reversion
+
+mirror Perfect-libKafka
+reversion
+
+mirror Perfect-Kafka
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(Linux)
+let package = Package( name: "PerfectKafka", dependencies:[
+      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
+      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
+    ])
+#else
+let package = Package( name: "PerfectKafka", dependencies:[
+      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
+    ])
+#endif
+EOF
+reversion
+
+mirror Perfect-libMosquitto
+reversion
+
+mirror Perfect-Mosquitto
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(Linux)
+let package = Package( name: "PerfectMosquitto", dependencies:[
+      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
+      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
+    ])
+#else
+let package = Package( name: "PerfectMosquitto", dependencies:[
+      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
+    ])
+#endif
 EOF
 reversion
 
@@ -572,9 +600,7 @@ reversion
 mirror Perfect-Session-MySQL
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectSessionMySQL",
-	targets: [],
+let package = Package(name: "PerfectSessionMySQL", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
@@ -586,45 +612,69 @@ reversion
 mirror Perfect-Session-PostgreSQL
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectSessionPostgreSQL",
-	targets: [],
+let package = Package(name: "PerfectSessionPostgreSQL",targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
-	]
-)
+	])
 EOF
 reversion
 
 mirror Perfect-Session-Redis
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectSessionRedis",
-	targets: [],
+let package = Package(name: "PerfectSessionRedis", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Redis", majorVersion: 3),
-	]
-)
+	])
+EOF
+reversion
+
+mirror Perfect-Session-MongoDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectSessionMongoDB",targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Session-SQLite
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectSessionSQLite",targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/SQLite-StORM", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Session-CouchDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectSessionCouchDB",targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/CouchDB-StORM", majorVersion: 3),
+	])
 EOF
 reversion
 
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-let package = Package(
-	name: "PerfectTemplate",
-	targets: [],
+let package = Package(name: "PerfectTemplate", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-	]
-)
+	])
 EOF
 reversion
 
 # Clean up
 popd
 
-printf "\n\x1b[1mNow Perfect local repos are ready: /tmp/perfect\x1b[0m\n"
+printf "\n\x1b[1mNow Perfect local mirros are ready: /tmp/perfect\x1b[0m\n"

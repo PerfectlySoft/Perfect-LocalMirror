@@ -29,7 +29,15 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-FileMaker", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-MySQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-PostgreSQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-MongoDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-Redis", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-SQLite", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-CouchDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Markdown", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Python", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-LDAP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Kafka", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mosquitto", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
@@ -70,9 +78,18 @@ import PerfectFileMaker
 import PerfectHadoop
 import PerfectWebSockets
 import PerfectWebRedirects
+import PerfectPython
+import PerfectMarkdown
+import PerfectLDAP
+import PerfectKafka
+import PerfectMosquitto
+import PerfectSession
 import PerfectSessionMySQL
 import PerfectSessionPostgreSQL
 import PerfectSessionRedis
+import PerfectSessionMongoDB
+import PerfectSessionSQLite
+import PerfectSessionCouchDB
 import PerfectZip
 import MariaDB
 import SwiftMoment
