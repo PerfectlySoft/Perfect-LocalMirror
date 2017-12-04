@@ -27,6 +27,9 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-Python", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-LDAP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Kafka", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mosquitto", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
@@ -52,11 +55,14 @@ import PerfectRedis
 import PerfectMongoDB
 import PerfectPython
 import PerfectMarkdown
+import PerfectRepeater
 import PerfectLDAP
 import PerfectCouchDB
 import PerfectHadoop
 import PerfectWebSockets
 import PerfectWebRedirects
+import PerfectKafka
+import PerfectMosquitto
 import PerfectZip
 import MariaDB
 import SwiftMoment

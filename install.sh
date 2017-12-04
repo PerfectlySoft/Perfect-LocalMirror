@@ -477,6 +477,47 @@ let package = Package(
 EOF
 reversion
 
+mirror Perfect-Repeater
+reversion
+
+mirror Perfect-libKafka
+reversion
+
+mirror Perfect-Kafka
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(Linux)
+let package = Package( name: "PerfectKafka", dependencies:[
+      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
+      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
+    ])
+#else
+let package = Package( name: "PerfectKafka", dependencies:[
+      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
+    ])
+#endif
+EOF
+reversion
+
+mirror Perfect-libMosquitto
+reversion
+
+mirror Perfect-Mosquitto
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+#if os(Linux)
+let package = Package( name: "PerfectMosquitto", dependencies:[
+      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
+      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
+    ])
+#else
+let package = Package( name: "PerfectMosquitto", dependencies:[
+      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
+    ])
+#endif
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
