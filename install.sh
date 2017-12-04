@@ -120,6 +120,18 @@ let package = Package(
 EOF
 reversion
 
+mirror Perfect-WebSockets
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectWebSockets", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Crypto", majorVersion: 3),
+	])
+EOF
+reversion
+
 mirror Perfect-CZlib-src
 cd PerfectCZlib
 rm -rf amiga contrib doc examples msdoc nintendods old os400 qnx test watcom win32
@@ -131,6 +143,21 @@ let package = Package(
     dependencies:  [],
  		exclude: ["contrib", "test", "examples"]
 )
+EOF
+reversion
+
+mirror Perfect-Zip
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectZip", targets: [
+		Target(name: "minizip", dependencies: []),
+		Target(name: "PerfectZip", dependencies: ["minizip"]),
+	],
+	dependencies: [
+		.Package(url: "$HUB/Perfect", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-CZlib-src", majorVersion: 0),
+	])
 EOF
 reversion
 
@@ -435,6 +462,7 @@ let package = Package(
 )
 EOF
 reversion
+
 
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null

@@ -13,6 +13,8 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-WebSockets", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Zip", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SQLite", majorVersion: 3),
@@ -52,6 +54,8 @@ import PerfectMarkdown
 import PerfectLDAP
 import PerfectCouchDB
 import PerfectHadoop
+import PerfectWebSockets
+import PerfectZip
 import MariaDB
 import SwiftMoment
 import SwiftRandom
