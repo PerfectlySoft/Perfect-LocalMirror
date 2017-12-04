@@ -755,6 +755,52 @@ let package = Package(name: "PerfectTurnstileCouchDB",	targets: [],
 EOF
 reversion
 
+mirror Perfect-OAuth2
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "OAuth2",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-LocalAuthentication-PostgreSQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectLocalAuthentication",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-PostgreSQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
+	])
+EOF
+reversion
+
+mirror Perfect-LocalAuthentication-MySQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectLocalAuthentication",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session-MySQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
+	])
+EOF
+reversion
+
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription

@@ -38,8 +38,15 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-LDAP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Kafka", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mosquitto", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-OAuth2", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
+		.Package(url: "$HUB/Perfect-Turnstile-SQLite", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-MySQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-PostgreSQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-MongoDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-CouchDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-LocalAuthentication-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
@@ -50,11 +57,6 @@ let package = Package(
 		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
 		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
-		.Package(url: "$HUB/Perfect-Turnstile-SQLite", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-MySQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-PostgreSQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-MongoDB", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-CouchDB", majorVersion: 3),
 	]
 )
 EOF
@@ -95,7 +97,14 @@ import PerfectSessionRedis
 import PerfectSessionMongoDB
 import PerfectSessionSQLite
 import PerfectSessionCouchDB
+import PerfectTurnstileSQLite
+import PerfectTurnstileMySQL
+import PerfectTurnstilePostgreSQL
+import PerfectTurnstileMongoDB
+import PerfectTurnstileCouchDB
+import PerfectLocalAuthentication
 import PerfectZip
+import OAuth2
 import MariaDB
 import SwiftMoment
 import SwiftRandom
@@ -107,11 +116,6 @@ import CouchDBStORM
 import PostgresStORM
 import MySQLStORM
 import MongoDBStORM
-import PerfectTurnstileSQLite
-import PerfectTurnstileMySQL
-import PerfectTurnstilePostgreSQL
-import PerfectTurnstileMongoDB
-import PerfectTurnstileCouchDB
 print("Hello, Perfect!")
 EOF
 
@@ -126,4 +130,33 @@ rm -rf *.pins
 time swift run
 popd
 
+pushd .
+rm -rf /tmp/swtest
+mkdir /tmp/swtest
+cd /tmp/swtest
+swift package init --type=executable
+rm -rf Tests
+HUB=/tmp/perfect tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "swtest",	targets: [],
+  dependencies: [
+		.Package(url: "$HUB/Perfect-LocalAuthentication-MySQL", majorVersion: 3),
+	]
+)
+EOF
+tee Sources/swtest/main.swift << EOF >> /dev/null
+import PerfectLocalAuthentication
+print("Hello, Perfect Authentication MySQL!")
+EOF
+echo "++++++++++++ L I N U X ++++++++++"
+docker pull rockywei/swift:4.0
+time docker run -it -v /tmp:/tmp -w /tmp/swtest rockywei/swift:4.0 /bin/bash -c \
+"time swift run"
+echo "++++++++++++ M A C O S ++++++++++"
+rm -rf .build*
+rm -rf *.resolved
+rm -rf *.pins
+time swift run
+popd
 rm -rf /tmp/swtest
