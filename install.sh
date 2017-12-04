@@ -540,6 +540,15 @@ let package = Package( name: "PerfectFileMaker", dependencies:[
 EOF
 reversion
 
+mirror Perfect-Notifications
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "PerfectNotifications", dependencies:[
+      .Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3)
+    ])
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription

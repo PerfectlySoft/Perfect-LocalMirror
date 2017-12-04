@@ -15,6 +15,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-WebSockets", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-WebRedirects", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Notifications", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Zip", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-XML", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
@@ -59,6 +60,7 @@ import PerfectMongoDB
 import PerfectPython
 import PerfectMarkdown
 import PerfectRepeater
+import PerfectNotifications
 import PerfectLDAP
 import PerfectCouchDB
 import PerfectFileMaker
