@@ -373,6 +373,35 @@ name: "PerfectMongoDB",
 EOF
 reversion
 
+mirror Perfect-libSASL
+reversion
+
+mirror_ex Perfect-ICONV PerfectSideRepos
+reversion
+
+mirror Perfect-OpenLDAP
+reversion
+
+mirror Perfect-LDAP
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+name: "PerfectLDAP",
+    targets: [],
+    dependencies: [
+        .Package(url: "$HUB/Perfect-ICONV", majorVersion: 3),
+        .Package(url: "$HUB/Perfect-libSASL", majorVersion: 1),
+        .Package(url: "$HUB/Perfect-OpenLDAP", majorVersion: 1)
+    ])
+EOF
+reversion
+
+mirror Perfect-Markdown
+reversion
+
+mirror Perfect-Python
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription

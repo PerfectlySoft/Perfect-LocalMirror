@@ -20,6 +20,9 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-MariaDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-MongoDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Redis", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Markdown", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Python", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-LDAP", majorVersion: 3),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
@@ -41,6 +44,9 @@ import PerfectSQLite
 import PerfectMySQL
 import PerfectRedis
 import PerfectMongoDB
+import PerfectPython
+import PerfectMarkdown
+import PerfectLDAP
 import MariaDB
 import SwiftMoment
 import SwiftRandom
