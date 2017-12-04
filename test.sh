@@ -49,7 +49,12 @@ let package = Package(
 		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
 		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
 		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Perfect-Turnstile-SQLite", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-MySQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-PostgreSQL", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-MongoDB", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Turnstile-CouchDB", majorVersion: 3),
 	]
 )
 EOF
@@ -102,6 +107,11 @@ import CouchDBStORM
 import PostgresStORM
 import MySQLStORM
 import MongoDBStORM
+import PerfectTurnstileSQLite
+import PerfectTurnstileMySQL
+import PerfectTurnstilePostgreSQL
+import PerfectTurnstileMongoDB
+import PerfectTurnstileCouchDB
 print("Hello, Perfect!")
 EOF
 

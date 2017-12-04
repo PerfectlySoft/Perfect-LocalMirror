@@ -664,6 +664,97 @@ let package = Package(name: "PerfectSessionCouchDB",targets: [],
 EOF
 reversion
 
+mirror_ex Turnstile stormpath
+reversion
+
+mirror_ex Turnstile-Perfect PerfectSideRepos
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "TurnstilePerfect", targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+		.Package(url: "$HUB/Turnstile", majorVersion: 1),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2)
+	])
+EOF
+reversion
+
+mirror Perfect-Turnstile-SQLite
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectTurnstileSQLite",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/SQLite-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Turnstile-MySQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectTurnstileMySQL",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Turnstile-PostgreSQL
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectTurnstilePostgreSQL",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Turnstile-MongoDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectTurnstileMongoDB",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
+	])
+EOF
+reversion
+
+mirror Perfect-Turnstile-CouchDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectTurnstileCouchDB",	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/CouchDB-StORM", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
+	])
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
