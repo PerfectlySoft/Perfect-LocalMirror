@@ -23,7 +23,9 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-Markdown", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Python", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-LDAP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
 		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
 	]
@@ -47,9 +49,11 @@ import PerfectMongoDB
 import PerfectPython
 import PerfectMarkdown
 import PerfectLDAP
+import PerfectCouchDB
 import MariaDB
 import SwiftMoment
 import SwiftRandom
+import SwiftString
 import JSONConfig
 print("Hello, Perfect!")
 EOF

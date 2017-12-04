@@ -402,6 +402,28 @@ reversion
 mirror Perfect-Python
 reversion
 
+mirror_ex SwiftString iamjono
+rm -rf *.xcodeproj
+rm -rf .swift-version
+rm -rf .travis.yml
+rm -rf *.podspec
+reversion
+
+mirror Perfect-CouchDB
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectCouchDB",
+	targets: [],
+	dependencies: [
+		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+	]
+)
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
