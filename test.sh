@@ -16,6 +16,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-WebSockets", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-WebRedirects", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Zip", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-XML", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SQLite", majorVersion: 3),
@@ -29,6 +30,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Kafka", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mosquitto", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-FileMaker", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
@@ -44,6 +46,7 @@ import PerfectHTTP
 import PerfectHTTPServer
 import PerfectThread
 import PerfectNet
+import PerfectXML
 import PerfectCrypto
 import PerfectCURL
 import PerfectSMTP
@@ -58,6 +61,7 @@ import PerfectMarkdown
 import PerfectRepeater
 import PerfectLDAP
 import PerfectCouchDB
+import PerfectFileMaker
 import PerfectHadoop
 import PerfectWebSockets
 import PerfectWebRedirects

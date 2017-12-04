@@ -518,6 +518,28 @@ let package = Package( name: "PerfectMosquitto", dependencies:[
 EOF
 reversion
 
+mirror Perfect-libxml2
+reversion
+
+mirror Perfect-XML
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "PerfectXML", dependencies:[
+      .Package(url: "$HUB/Perfect-libxml2", majorVersion: 2)
+    ])
+EOF
+reversion
+
+mirror Perfect-FileMaker
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package( name: "PerfectFileMaker", dependencies:[
+      .Package(url: "$HUB/Perfect-XML", majorVersion: 3),
+      .Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
+    ])
+EOF
+reversion
+
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
