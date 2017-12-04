@@ -400,35 +400,6 @@ name: "PerfectMongoDB",
 EOF
 reversion
 
-mirror Perfect-libSASL
-reversion
-
-mirror_ex Perfect-ICONV PerfectSideRepos
-reversion
-
-mirror Perfect-OpenLDAP
-reversion
-
-mirror Perfect-LDAP
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(
-name: "PerfectLDAP",
-    targets: [],
-    dependencies: [
-        .Package(url: "$HUB/Perfect-ICONV", majorVersion: 3),
-        .Package(url: "$HUB/Perfect-libSASL", majorVersion: 1),
-        .Package(url: "$HUB/Perfect-OpenLDAP", majorVersion: 1)
-    ])
-EOF
-reversion
-
-mirror Perfect-Markdown
-reversion
-
-mirror Perfect-Python
-reversion
-
 mirror_ex SwiftString iamjono
 rm -rf *.xcodeproj
 rm -rf .swift-version
@@ -478,44 +449,6 @@ EOF
 reversion
 
 mirror Perfect-Repeater
-reversion
-
-mirror Perfect-libKafka
-reversion
-
-mirror Perfect-Kafka
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-#if os(Linux)
-let package = Package( name: "PerfectKafka", dependencies:[
-      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
-      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
-    ])
-#else
-let package = Package( name: "PerfectKafka", dependencies:[
-      .Package(url: "$HUB/Perfect-libKafka", majorVersion: 1)
-    ])
-#endif
-EOF
-reversion
-
-mirror Perfect-libMosquitto
-reversion
-
-mirror Perfect-Mosquitto
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-#if os(Linux)
-let package = Package( name: "PerfectMosquitto", dependencies:[
-      .Package(url: "$HUB/Perfect-LinuxBridge", majorVersion: 3),
-      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
-    ])
-#else
-let package = Package( name: "PerfectMosquitto", dependencies:[
-      .Package(url: "$HUB/Perfect-libMosquitto", majorVersion: 1)
-    ])
-#endif
-EOF
 reversion
 
 mirror Perfect-libxml2
