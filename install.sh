@@ -1,11 +1,12 @@
 clear
-HUB=/tmp/perfect
+HUB=/private/var/perfect
 pushd .
-rm -rf $HUB
-mkdir -p $HUB
+sudo rm -rf $HUB
+sudo mkdir -p $HUB
+sudo chown $USER $HUB
 
 function mirror_ex() {
-	cd /tmp/perfect
+	cd $HUB
 	REPO=$1
 	VEND=$2
 	RELEASES=$VEND/$REPO/releases
@@ -17,6 +18,7 @@ function mirror_ex() {
 	curl -s -L "$GITHUB/$VEND/$REPO/archive/$LATEST.tar.gz" -o /tmp/a.tgz
 	tar xzf /tmp/a.tgz
 	rm -rf /tmp/a.tgz
+	#chown $USER $REPO-$LATEST
 	mv $REPO-$LATEST $REPO
 	cd $REPO
 }
@@ -814,4 +816,4 @@ reversion
 # Clean up
 popd
 
-printf "\n\x1b[1mNow Perfect local mirros are ready: /tmp/perfect\x1b[0m\n"
+printf "\n\x1b[1mNow Perfect local mirros are ready: \n\n$HUB\x1b[0m\n\n"

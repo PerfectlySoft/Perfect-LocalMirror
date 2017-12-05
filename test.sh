@@ -5,7 +5,10 @@ mkdir /tmp/swtest
 cd /tmp/swtest
 swift package init --type=executable
 rm -rf Tests
-HUB=/tmp/perfect tee Package.swift << EOF >> /dev/null
+export HUBEX=/private/var
+export HUB=$HUBEX/perfect
+
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "swtest",	targets: [],
@@ -121,7 +124,8 @@ EOF
 
 echo "++++++++++++ L I N U X ++++++++++"
 docker pull rockywei/swift:4.0
-time docker run -it -v /tmp:/tmp -w /tmp/swtest rockywei/swift:4.0 /bin/bash -c \
+time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
+rockywei/swift:4.0 /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*
@@ -136,7 +140,7 @@ mkdir /tmp/swtest
 cd /tmp/swtest
 swift package init --type=executable
 rm -rf Tests
-HUB=/tmp/perfect tee Package.swift << EOF >> /dev/null
+tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(
 	name: "swtest",	targets: [],
@@ -151,7 +155,8 @@ print("Hello, Perfect Authentication MySQL!")
 EOF
 echo "++++++++++++ L I N U X ++++++++++"
 docker pull rockywei/swift:4.0
-time docker run -it -v /tmp:/tmp -w /tmp/swtest rockywei/swift:4.0 /bin/bash -c \
+time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
+rockywei/swift:4.0 /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*

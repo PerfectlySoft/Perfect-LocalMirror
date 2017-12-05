@@ -1,4 +1,4 @@
-# Perfect Repo Local Mirror 本地编译加速器
+# Perfect Local Mirror 本地编译缓存加速器
 
 <p align="center">
     <a href="http://perfect.org/get-involved.html" target="_blank">
@@ -52,12 +52,16 @@ Open a terminal then execute the following script to it.
 
 ```
 git clone https://github.com/PerfectlySoft/Perfect-LocalMirror.git && \
-./Perfect-Light/install.sh && rm -rf Perfect-Light/
+./Perfect-LocalMirror/install.sh && rm -rf Perfect-LocalMirror/
 ```
+
+⚠️ **NOTE** 注意 ⚠️ You may need `sudo` privilege to perform the installation.
+
+您可能需要管理员权限以执行上述命令。
 
 ### Usage
 
-You will find a localized version of PerfectTemplate, the starter web server, under the folder of `/tmp/perfect/PerfectTemplate`:
+You will find a localized version of PerfectTemplate, the starter web server, under the folder of `/private/var/perfect/PerfectTemplate`:
 
 您会发现一个本地版本的模板服务器，结构已经发生了显著变化：
 
@@ -67,21 +71,19 @@ let package = Package(
 	name: "PerfectTemplate",
 	targets: [],
 	dependencies: [
-		.Package(url: "/tmp/perfect/Perfect-HTTPServer", majorVersion: 3),
+		.Package(url: "/private/var/perfect/Perfect-HTTPServer", majorVersion: 3),
 	]
 )
 ```
 
 Then the server building speed will be completely different now.
 
-现在服务器编译速度肯定大不相同了，请尽情尝试：
-
-`cd /tmp/perfect/PerfectTemplate && swift run`
+现在服务器编译速度肯定大不相同了，请尽情尝试！
 
 ## Local Cache Path
 
-Now these components are available on local repo `/tmp/perfect` as the above fashion:
-目前可以使用的本地模块包括：
+Now these components are available on local repo `/private/var/perfect` as the above fashion:
+目前可以使用上述路径的本地模块包括：
 
 (a full example can be found on `test.sh` script)
 (完整的调用样例可以参考 `test.sh` 脚本)
@@ -121,8 +123,8 @@ Only three steps it actually takes.
 - Patch Package.swift to allow local mirrors. 然后修改本地下载的Package.swift 文件以应用本地镜像。
 - `git tag` the latest online version to the offline updates. 在修改基础上增加一个和在线版本一致的离线版本。
 
-Take OAuth2 for example, the installation will patch all dependencies to offline versions:
-以 OAuth2 为例，安装脚本会将所有依存关系指向本地离线版本：
+Take OAuth2 for example, the installation will patch all dependencies to offline versions. By default, the installation path is HUB=`/private/var/perfect`.
+以 OAuth2 为例，安装脚本会将所有依存关系指向本地离线版本，默认安装路径是 HUB=`/private/var/perfect`：
 
 ``` swift
 mirror Perfect-OAuth2
