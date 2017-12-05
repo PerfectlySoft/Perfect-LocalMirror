@@ -105,6 +105,9 @@ SwiftString|JSONConfig|StORM|SQLiteStORM
 CouchDBStORM|PostgresStORM|MySQLStORM|MongoDBStORM
 PerfectLocalAuthentication|&nbsp;|&nbsp;|&nbsp;
 
+** NOTE ** If any Server Side Swift component has little dependencies and free of incompressible large files such as binaries in git history, then it could be unnecessary to cache it as the above.
+⚠️注意⚠️ 如果Swift服务器组件没有特别的依存关系，而且在历史版本中也没有无法压缩的大文件（比如二进制文件），那么可能就根本没有必要使用这个本地缓存
+
 ## Magic Behind
 
 The actual bottleneck is Swift Package Manager version 4 is using a [`--mirror`](https://github.com/apple/swift-package-manager/commit/58e3844c3e505dcaf295be02dc01698b488dd63c) flag of `git clone`, which has a good reason but may cause 8x+ slower than Swift 3 in a certain situation.
