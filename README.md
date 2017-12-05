@@ -47,7 +47,8 @@ We received many complaints about how slow Swift Package Manager version 4 was, 
 
 ### Install
 
-Open a terminal then execute the following script to it.
+Open a terminal then execute the following script.
+
 打开终端执行下列命令：
 
 ```
