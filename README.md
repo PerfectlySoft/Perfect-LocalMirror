@@ -51,7 +51,7 @@ Open a terminal then execute the following script to it.
 打开终端执行下列命令：
 
 ```
-git clone https://github.com/PerfectlySoft/Perfect-Accelerator.git && \
+git clone https://github.com/PerfectlySoft/Perfect-LocalMirror.git && \
 ./Perfect-Light/install.sh && rm -rf Perfect-Light/
 ```
 
