@@ -53,12 +53,29 @@ Open a terminal then execute the following script.
 
 ```
 git clone https://github.com/PerfectlySoft/Perfect-LocalMirror.git && \
-./Perfect-LocalMirror/install.sh && rm -rf Perfect-LocalMirror/
+./Perfect-LocalMirror/install.sh
 ```
 
 ⚠️ **NOTE** 注意 ⚠️ You may need `sudo` privilege to perform the installation.
 
 您可能需要管理员权限以执行上述命令。
+
+### Perfect Assistant Support
+
+There is also a script to patch Perfect Assistant to use these mirrors:
+本程序同样包括了用于软件助手的补丁。
+
+```
+./Perfect-LocalMirror/updatePA.sh
+```
+
+You can revert the patch by another script:
+您可以随时卸载这个补丁：
+
+```
+./Perfect-LocalMirror/resetPA.sh
+```
+
 
 ### Usage
 
