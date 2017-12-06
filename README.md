@@ -63,6 +63,7 @@ git clone https://github.com/PerfectlySoft/Perfect-LocalMirror.git && \
 ### Perfect Assistant Support
 
 There is also a script to patch Perfect Assistant to use these mirrors:
+
 本程序同样包括了用于软件助手的补丁。
 
 ```
@@ -70,6 +71,7 @@ There is also a script to patch Perfect Assistant to use these mirrors:
 ```
 
 You can revert the patch by another script:
+
 您可以随时卸载这个补丁：
 
 ```
