@@ -43,7 +43,7 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-Mosquitto", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-OAuth2", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
-		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 1),
+		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Turnstile-SQLite", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Turnstile-MySQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Turnstile-PostgreSQL", majorVersion: 3),
