@@ -12,7 +12,7 @@ function mirror_ex() {
 	RELEASES=$VEND/$REPO/releases
 	TAGS=/$RELEASES/tag/
 	GITHUB=https://github.com
-	LATEST=$(curl -s $GITHUB/$RELEASES | grep $TAGS | head -n 1 | \
+	LATEST=$(curl -s $GITHUB/$VEND/$REPO/tags | grep $TAGS | head -n 1 | \
 	sed $'s/[\"|\<|\>|\/]/\\\n/g' | egrep '[0-9]+.[0-9]+.[0-9]' | head -n 1)
 	echo "Caching $VEND/$REPO:$LATEST"
 	curl -s -L "$GITHUB/$VEND/$REPO/archive/$LATEST.tar.gz" -o /tmp/a.tgz
@@ -330,41 +330,46 @@ let package = Package(name: "PerfectRedis", targets: [],
 EOF
 reversion
 
-mirror Perfect-mongo-c
-pushd .
-MONGOC_VER=$(brew info mongo-c-driver|awk '$1=="mongo-c-driver:" {print $3}')
-cd /usr/local/include
-ln -s /usr/local/Cellar/mongo-c-driver/$MONGOC_VER/include/libmongoc-1.0
-ln -s /usr/local/Cellar/mongo-c-driver/$MONGOC_VER/include/libbson-1.0
-popd
+mirror_ex Perfect-CBSON PerfectSideRepos
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectCBSON",
+	pkgConfig: "libbson-1.0",
+	providers: [
+		.Brew("mongo-c-driver"),
+		.Apt("libbson-dev"),
+	]
+)
+EOF
 reversion
 
-mirror Perfect-mongo-c-linux
-tee module.modulemap << EOF >> /dev/null
-module libmongoc {
-    header "/usr/include/libbson-1.0/bson.h"
-    header "/usr/include/libmongoc-1.0/mongoc.h"
-    link "mongoc-1.0"
-    export *
-}
+mirror_ex Perfect-CMongo PerfectSideRepos
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(
+	name: "PerfectCMongo",
+	pkgConfig: "libmongoc-1.0",
+	providers: [
+		.Brew("mongo-c-driver"),
+		.Apt("libbson-dev"),
+	],
+	dependencies: 
+	[.Package(url: "$HUB/Perfect-CBSON", majorVersion: 0)]
+)
 EOF
 reversion
 
 mirror Perfect-MongoDB
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
-#if os(OSX)
-let url = "$HUB/Perfect-mongo-c"
-#else
-let url = "$HUB/Perfect-mongo-c-linux"
-#endif
 let package = Package(
 name: "PerfectMongoDB", targets: [],
     dependencies: [
-        .Package(url: url, majorVersion: 2),
+        .Package(url: "$HUB/Perfect-CBSON", majorVersion: 0),
+				.Package(url: "$HUB/Perfect-CMongo", majorVersion: 0),
         .Package(url: "$HUB/Perfect", majorVersion: 3)
-    ],
-    exclude: ["Sources/libmongoc"])
+    ])
 EOF
 reversion
 
