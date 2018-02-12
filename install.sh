@@ -194,7 +194,6 @@ import PackageDescription
 let package = Package(name: "PerfectLogger",targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect", majorVersion: 3),
-		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
 	])
 EOF
@@ -219,8 +218,6 @@ import PackageDescription
 let package = Package(name: "PerfectRequestLogger", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
 	])
 EOF
 reversion
@@ -385,7 +382,6 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "PerfectCouchDB", targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 	]
@@ -398,7 +394,6 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "PerfectHadoop", targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CURL", majorVersion: 3)
 	]
 )
@@ -410,9 +405,7 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "PerfectWebRedirects", targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2)
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3)
 	]
 )
 EOF
@@ -595,10 +588,7 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package( name: "PerfectSession", targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
+		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3)
 	]
 )
 EOF
@@ -767,10 +757,7 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "OAuth2",	targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3)
 	])
 EOF
 reversion
@@ -783,7 +770,6 @@ let package = Package(name: "PerfectLocalAuthentication",	targets: [],
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
@@ -799,7 +785,6 @@ let package = Package(name: "PerfectLocalAuthentication",	targets: [],
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Session-MySQL", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
