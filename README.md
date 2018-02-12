@@ -155,10 +155,7 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "OAuth2",	targets: [],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
+		.Package(url: "$HUB/Perfect-Session", majorVersion: 3)
 	])
 EOF
 reversion
