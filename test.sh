@@ -123,9 +123,9 @@ print("Hello, Perfect!")
 EOF
 
 echo "++++++++++++ L I N U X ++++++++++"
-docker pull rockywei/swift:4.0
+docker pull rockywei/swift:4.1
 time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
-rockywei/swift:4.0 /bin/bash -c \
+rockywei/swift:4.1 /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*
@@ -154,9 +154,9 @@ import PerfectLocalAuthentication
 print("Hello, Perfect Authentication MySQL!")
 EOF
 echo "++++++++++++ L I N U X ++++++++++"
-docker pull rockywei/swift:4.0
+docker pull rockywei/swift:4.1
 time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
-rockywei/swift:4.0 /bin/bash -c \
+rockywei/swift:4.1 /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*
