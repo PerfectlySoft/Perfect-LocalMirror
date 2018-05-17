@@ -7,6 +7,7 @@ swift package init --type=executable
 rm -rf Tests
 export HUBEX=/private/var
 export HUB=$HUBEX/perfect
+export SWV=4.1.1
 
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
@@ -59,7 +60,7 @@ let package = Package(
 		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
 		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
 		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 	]
 )
 EOF
@@ -123,9 +124,9 @@ print("Hello, Perfect!")
 EOF
 
 echo "++++++++++++ L I N U X ++++++++++"
-docker pull rockywei/swift:4.1
+docker pull rockywei/swift:$SWV
 time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
-rockywei/swift:4.1 /bin/bash -c \
+rockywei/swift:$SWV /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*
@@ -154,9 +155,9 @@ import PerfectLocalAuthentication
 print("Hello, Perfect Authentication MySQL!")
 EOF
 echo "++++++++++++ L I N U X ++++++++++"
-docker pull rockywei/swift:4.1
+docker pull rockywei/swift:$SWV
 time docker run -it -v $HUBEX:$HUBEX -v /tmp:/tmp -w /tmp/swtest \
-rockywei/swift:4.1 /bin/bash -c \
+rockywei/swift:$SWV /bin/bash -c \
 "time swift run"
 echo "++++++++++++ M A C O S ++++++++++"
 rm -rf .build*

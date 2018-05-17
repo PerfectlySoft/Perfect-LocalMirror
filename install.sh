@@ -247,6 +247,15 @@ reversion
 mirror Perfect-libpq-linux
 reversion
 
+mirror Perfect-CRUD
+tee Package.swift << EOF >> /dev/null
+import PackageDescription
+let package = Package(name: "PerfectCRUD", targets: [],
+	dependencies: [
+	])
+EOF
+reversion
+
 mirror Perfect-PostgreSQL
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
@@ -257,6 +266,7 @@ let url = "$HUB/Perfect-libpq-linux"
 #endif
 let package = Package(name: "PerfectPostgreSQL", targets: [],
     dependencies: [
+        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
         .Package(url: url, majorVersion: 2)
     ])
 EOF
@@ -270,6 +280,7 @@ tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package(name: "PerfectSQLite", targets: [],
     dependencies: [
+        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
         .Package(url: "$HUB/Perfect-sqlite3-support", majorVersion: 3)
     ])
 EOF
@@ -291,6 +302,7 @@ let url = "$HUB/Perfect-mysqlclient-Linux"
 #endif
 let package = Package(name: "PerfectMySQL", targets: [],
     dependencies: [
+        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
         .Package(url: url, majorVersion: 2)
     ])
 EOF
@@ -312,6 +324,7 @@ let url = "$HUB/Perfect-mariadbclient-Linux"
 #endif
 let package = Package(name: "MariaDB", targets: [],
     dependencies: [
+        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
         .Package(url: url, majorVersion: 2)
     ])
 EOF
@@ -421,7 +434,7 @@ mirror Perfect-XML
 tee Package.swift << EOF >> /dev/null
 import PackageDescription
 let package = Package( name: "PerfectXML", dependencies:[
-      .Package(url: "$HUB/Perfect-libxml2", majorVersion: 2)
+      .Package(url: "$HUB/Perfect-libxml2", majorVersion: 3)
     ])
 EOF
 reversion
@@ -516,6 +529,8 @@ import PackageDescription
 let package = Package( name: "StORM", targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect", majorVersion: 3),
+		.Package(url: "$HUB/SwiftMoment", majorVersion: 1),
+		.Package(url: "$HUB/SwiftString", majorVersion: 2),
 	])
 EOF
 reversion
@@ -552,7 +567,7 @@ let package = Package( name: "MongoDBStORM", targets: [],
 		.Package(url: "$HUB/StORM", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-MongoDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1)
 	])
 EOF
 reversion
@@ -565,7 +580,7 @@ let package = Package( name: "CouchDBStORM", targets: [],
 		.Package(url: "$HUB/StORM", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-CouchDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0)
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1)
 	])
 EOF
 reversion
@@ -686,7 +701,7 @@ let package = Package(name: "PerfectTurnstileSQLite",	targets: [],
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
 	])
@@ -701,7 +716,7 @@ let package = Package(name: "PerfectTurnstileMySQL",	targets: [],
 		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 	])
 EOF
@@ -716,7 +731,7 @@ let package = Package(name: "PerfectTurnstilePostgreSQL",	targets: [],
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 	])
 EOF
@@ -731,7 +746,7 @@ let package = Package(name: "PerfectTurnstileMongoDB",	targets: [],
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 	])
 EOF
@@ -746,7 +761,7 @@ let package = Package(name: "PerfectTurnstileCouchDB",	targets: [],
 		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 0),
+		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
 		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 	])
 EOF
@@ -791,7 +806,6 @@ let package = Package(name: "PerfectLocalAuthentication",	targets: [],
 	])
 EOF
 reversion
-
 
 mirror PerfectTemplate
 tee Package.swift << EOF >> /dev/null
