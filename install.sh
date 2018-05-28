@@ -248,26 +248,30 @@ mirror Perfect-libpq-linux
 reversion
 
 mirror Perfect-CRUD
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectCRUD", targets: [],
-	dependencies: [
-	])
-EOF
 reversion
 
 mirror Perfect-PostgreSQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
 #if os(OSX)
-let url = "$HUB/Perfect-libpq"
+let client_url = "$HUB/Perfect-libpq"
 #else
-let url = "$HUB/Perfect-libpq-linux"
+let client_url = "$HUB/Perfect-libpq-linux"
 #endif
-let package = Package(name: "PerfectPostgreSQL", targets: [],
+let package = Package(name: "PerfectPostgreSQL", 
+	products: [.library(name: "PerfectPostgreSQL",targets: ["PerfectPostgreSQL"]),],
     dependencies: [
-        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
-        .Package(url: url, majorVersion: 2)
+      .package(url: "$HUB/Perfect-CRUD", .branch("master")),
+      .package(url: client_url, .branch("master"))
+    ],
+    targets: [
+        .target(
+            name: "PerfectPostgreSQL",
+            dependencies: ["PerfectCRUD"]),
+        .testTarget(
+            name: "PerfectPostgreSQLTests",
+            dependencies: ["PerfectPostgreSQL"]),
     ])
 EOF
 reversion
@@ -277,11 +281,21 @@ reversion
 
 mirror Perfect-SQLite
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectSQLite", targets: [],
+let package = Package(name: "PerfectSQLite", 
+	products: [.library(name: "PerfectSQLite",targets: ["PerfectSQLite"]),],
     dependencies: [
-        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
-        .Package(url: "$HUB/Perfect-sqlite3-support", majorVersion: 3)
+      .package(url: "$HUB/Perfect-CRUD", .branch("master")),
+      .package(url: "$HUB/Perfect-sqlite3-support", .branch("master"))
+    ],
+    targets: [
+        .target(
+            name: "PerfectSQLite",
+            dependencies: ["PerfectCRUD"]),
+        .testTarget(
+            name: "PerfectSQLiteTests",
+            dependencies: ["PerfectSQLite"]),
     ])
 EOF
 reversion
@@ -294,16 +308,26 @@ reversion
 
 mirror Perfect-MySQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
 #if os(OSX)
-let url = "$HUB/Perfect-mysqlclient"
+let client_url = "$HUB/Perfect-mysqlclient"
 #else
-let url = "$HUB/Perfect-mysqlclient-Linux"
+let client_url = "$HUB/Perfect-mysqlclient-Linux"
 #endif
-let package = Package(name: "PerfectMySQL", targets: [],
+let package = Package(name: "PerfectMySQL", 
+	products: [.library(name: "PerfectMySQL",targets: ["PerfectMySQL"]),],
     dependencies: [
-        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
-        .Package(url: url, majorVersion: 2)
+      .package(url: "$HUB/Perfect-CRUD", .branch("master")),
+      .package(url: client_url, .branch("master"))
+    ],
+    targets: [
+        .target(
+            name: "PerfectMySQL",
+            dependencies: ["PerfectCRUD"]),
+        .testTarget(
+            name: "PerfectMySQLTests",
+            dependencies: ["PerfectMySQL"]),
     ])
 EOF
 reversion
@@ -324,7 +348,6 @@ let url = "$HUB/Perfect-mariadbclient-Linux"
 #endif
 let package = Package(name: "MariaDB", targets: [],
     dependencies: [
-        .Package(url: "$HUB/Perfect-CRUD", majorVersion: 1),
         .Package(url: url, majorVersion: 2)
     ])
 EOF
@@ -537,24 +560,44 @@ reversion
 
 mirror_ex SQLite-StORM SwiftORM
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package( name: "SQLiteStORM", targets: [],
+let package = Package( name: "SQLiteStORM", 
+	products: [.library(name: "SQLiteStORM",targets: ["SQLiteStORM"]),],
 	dependencies: [
-		.Package(url: "$HUB/StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-SQLite", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.package(url: "$HUB/StORM", .branch("master")),
+		.package(url: "$HUB/Perfect-SQLite", .branch("master")),
+		.package(url: "$HUB/Perfect-Logger", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "SQLiteStORM",
+            dependencies: ["StORM", "PerfectSQLite", "PerfectLogger"]),
+        .testTarget(
+            name: "SQLiteStORMTests",
+            dependencies: ["SQLiteStORM"]),
 	])
 EOF
 reversion
 
 mirror_ex MySQL-StORM SwiftORM
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package( name: "MySQLStORM", targets: [],
+let package = Package( name: "MySQLStORM", 
+	products: [.library(name: "MySQLStORM",targets: ["MySQLStORM"]),],
 	dependencies: [
-		.Package(url: "$HUB/StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
+		.package(url: "$HUB/StORM", .branch("master")),
+		.package(url: "$HUB/Perfect-MySQL", .branch("master")),
+		.package(url: "$HUB/Perfect-Logger", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "MySQLStORM",
+            dependencies: ["StORM", "PerfectMySQL", "PerfectLogger"]),
+        .testTarget(
+            name: "MySQLStORMTests",
+            dependencies: ["MySQLStORM"]),
 	])
 EOF
 reversion
@@ -586,15 +629,25 @@ EOF
 reversion
 
 mirror_ex Postgres-StORM SwiftORM
+mkdir Sources/PostgresStORM
+mv Sources/*.swift Sources/PostgresStORM
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package( name: "PostgresStORM", targets: [],
+let package = Package( name: "PostgresStORM", 
+	products: [.library(name: "PostgresStORM",targets: ["PostgresStORM"]),],
 	dependencies: [
-		.Package(url: "$HUB/StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Logger", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-XML", majorVersion: 3)
-	])
+		.package(url: "$HUB/StORM", .branch("master")),
+		.package(url: "$HUB/Perfect-PostgreSQL", .branch("master")),
+		.package(url: "$HUB/Perfect-Logger", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "PostgresStORM",
+            dependencies: ["StORM", "PerfectPostgreSQL", "PerfectLogger"]),
+        .testTarget(
+            name: "PostgresStORMTests",
+            dependencies: ["PostgresStORM"])])
 EOF
 reversion
 
@@ -611,24 +664,41 @@ reversion
 
 mirror Perfect-Session-MySQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectSessionMySQL", targets: [],
+let package = Package( name: "PerfectSessionMySQL", 
+	products: [.library(name: "PerfectSessionMySQL",targets: ["PerfectSessionMySQL"]),],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-MySQL", majorVersion: 3),
-	]
-)
+		.package(url: "$HUB/Perfect-Session", .branch("master")),
+		.package(url: "$HUB/Perfect-MySQL", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "PerfectSessionMySQL",
+            dependencies: ["PerfectSession", "PerfectMySQL"]),
+        .testTarget(
+            name: "PerfectSessionMySQLTests",
+            dependencies: ["PerfectSessionMySQL"]),
 EOF
 reversion
 
 mirror Perfect-Session-PostgreSQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectSessionPostgreSQL",targets: [],
+let package = Package( name: "PerfectSessionPostgreSQL", 
+	products: [.library(name: "PerfectSessionPostgreSQL",targets: ["PerfectSessionPostgreSQL"]),],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-PostgreSQL", majorVersion: 3),
-	])
+		.package(url: "$HUB/Perfect-Session", .branch("master")),
+		.package(url: "$HUB/Perfect-PostgreSQL", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "PerfectSessionPostgreSQL",
+            dependencies: ["PerfectSession", "PerfectMySQL"]),
+        .testTarget(
+            name: "PerfectSessionPostgreSQLTests",
+            dependencies: ["PerfectSessionPostgreSQL"]),
 EOF
 reversion
 
@@ -656,12 +726,21 @@ reversion
 
 mirror Perfect-Session-SQLite
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectSessionSQLite",targets: [],
+let package = Package( name: "PerfectSessionSQLite", 
+	products: [.library(name: "PerfectSessionSQLite",targets: ["PerfectSessionSQLite"]),],
 	dependencies: [
-		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
-		.Package(url: "$HUB/SQLite-StORM", majorVersion: 3),
-	])
+		.package(url: "$HUB/Perfect-Session", .branch("master")),
+		.package(url: "$HUB/SQLite-StORM", .branch("master")),
+	],
+	targets:[
+        .target(
+            name: "PerfectSessionSQLite",
+            dependencies: ["PerfectSession", "SQLiteStORM"]),
+        .testTarget(
+            name: "PerfectSessionSQLiteTests",
+            dependencies: ["PerfectSessionSQLite"]),
 EOF
 reversion
 
@@ -672,97 +751,6 @@ let package = Package(name: "PerfectSessionCouchDB",targets: [],
 	dependencies: [
 		.Package(url: "$HUB/Perfect-Session", majorVersion: 3),
 		.Package(url: "$HUB/CouchDB-StORM", majorVersion: 3),
-	])
-EOF
-reversion
-
-mirror_ex Turnstile stormpath
-reversion
-
-mirror_ex Turnstile-Perfect PerfectSideRepos
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "TurnstilePerfect", targets: [],
-	dependencies: [
-		.Package(url: "$HUB/Perfect-HTTP", majorVersion: 3),
-		.Package(url: "$HUB/Turnstile", majorVersion: 1),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2)
-	])
-EOF
-reversion
-
-mirror Perfect-Turnstile-SQLite
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectTurnstileSQLite",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/SQLite-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
-		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
-	])
-EOF
-reversion
-
-mirror Perfect-Turnstile-MySQL
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectTurnstileMySQL",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
-		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
-	])
-EOF
-reversion
-
-mirror Perfect-Turnstile-PostgreSQL
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectTurnstilePostgreSQL",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
-		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
-	])
-EOF
-reversion
-
-mirror Perfect-Turnstile-MongoDB
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectTurnstileMongoDB",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/MongoDB-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
-		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
-	])
-EOF
-reversion
-
-mirror Perfect-Turnstile-CouchDB
-tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package(name: "PerfectTurnstileCouchDB",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/CouchDB-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3),
-		.Package(url: "$HUB/SwiftString", majorVersion: 2),
-		.Package(url: "$HUB/SwiftRandom", majorVersion: 1),
-		.Package(url: "$HUB/Turnstile-Perfect", majorVersion: 3),
 	])
 EOF
 reversion
@@ -779,31 +767,51 @@ reversion
 
 mirror Perfect-LocalAuthentication-PostgreSQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectLocalAuthentication",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
-		.Package(url: "$HUB/Postgres-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Session-PostgreSQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
-	])
+let package = Package(name: "PerfectLocalAuthentication", 
+	products: [.library(name: "PerfectLocalAuthentication",targets: ["PerfectLocalAuthentication"]),],
+    dependencies: [
+      .package(url: "$HUB/JSONConfig", .branch("master")),
+      .package(url: "$HUB/Perfect-RequestLogger", .branch("master")),
+      .package(url: "$HUB/Perfect-SMTP", .branch("master")),
+      .package(url: "$HUB/Perfect-StORM", .branch("master")),
+      .package(url: "$HUB/Perfect-Session-PostgreSQL", .branch("master")),
+      .package(url: "$HUB/Perfect-Mustache", .branch("master")),
+    ],
+    targets: [
+        .target(
+            name: "PerfectLocalAuthentication",
+            dependencies: ["JSONConfig", "PerfectRequestLogger", "PerfectSMTP", "PerfectStORM", "PerfectSessionPostgreSQL", "PerfectMustache"]),
+        .testTarget(
+            name: "PerfectLocalAuthenticationTests",
+            dependencies: ["PerfectLocalAuthentication"]),
+    ])
 EOF
 reversion
 
 mirror Perfect-LocalAuthentication-MySQL
 tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
 import PackageDescription
-let package = Package(name: "PerfectLocalAuthentication",	targets: [],
-	dependencies: [
-		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-RequestLogger", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-SMTP", majorVersion: 3),
-		.Package(url: "$HUB/MySQL-StORM", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Session-MySQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Mustache", majorVersion: 3)
-	])
+let package = Package(name: "PerfectLocalAuthentication", 
+	products: [.library(name: "PerfectLocalAuthentication",targets: ["PerfectLocalAuthentication"]),],
+    dependencies: [
+      .package(url: "$HUB/JSONConfig", .branch("master")),
+      .package(url: "$HUB/Perfect-RequestLogger", .branch("master")),
+      .package(url: "$HUB/Perfect-SMTP", .branch("master")),
+      .package(url: "$HUB/Perfect-StORM", .branch("master")),
+      .package(url: "$HUB/Perfect-Session-MySQL", .branch("master")),
+      .package(url: "$HUB/Perfect-Mustache", .branch("master")),
+    ],
+    targets: [
+        .target(
+            name: "PerfectLocalAuthentication",
+            dependencies: ["JSONConfig", "PerfectRequestLogger", "PerfectSMTP", "PerfectStORM", "PerfectSessionMySQL", "PerfectMustache"]),
+        .testTarget(
+            name: "PerfectLocalAuthenticationTests",
+            dependencies: ["PerfectLocalAuthentication"]),
+    ])
 EOF
 reversion
 

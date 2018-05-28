@@ -45,11 +45,6 @@ let package = Package(
 		.Package(url: "$HUB/Perfect-OAuth2", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-Repeater", majorVersion: 1),
 		.Package(url: "$HUB/Perfect-Hadoop", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-SQLite", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-MySQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-PostgreSQL", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-MongoDB", majorVersion: 3),
-		.Package(url: "$HUB/Perfect-Turnstile-CouchDB", majorVersion: 3),
 		.Package(url: "$HUB/Perfect-LocalAuthentication-PostgreSQL", majorVersion: 3),
 		.Package(url: "$HUB/JSONConfig", majorVersion: 3),
 		.Package(url: "$HUB/SwiftString", majorVersion: 2),
@@ -101,11 +96,6 @@ import PerfectSessionRedis
 import PerfectSessionMongoDB
 import PerfectSessionSQLite
 import PerfectSessionCouchDB
-import PerfectTurnstileSQLite
-import PerfectTurnstileMySQL
-import PerfectTurnstilePostgreSQL
-import PerfectTurnstileMongoDB
-import PerfectTurnstileCouchDB
 import PerfectLocalAuthentication
 import PerfectZip
 import OAuth2
