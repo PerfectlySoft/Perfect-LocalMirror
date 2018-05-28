@@ -36,6 +36,12 @@ function reversion() {
 	git tag $LATEST $VERSION  >> /dev/null
 }
 
+function repath() {
+	REPO=$1
+	mkdir Sources/$REPO
+	mv Sources/*.swift Sources/$REPO
+}
+
 mirror Perfect-LinuxBridge
 reversion
 
@@ -559,6 +565,7 @@ EOF
 reversion
 
 mirror_ex SQLite-StORM SwiftORM
+repath SQLiteStORM
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -581,6 +588,7 @@ EOF
 reversion
 
 mirror_ex MySQL-StORM SwiftORM
+repath MySQLStORM
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -629,8 +637,7 @@ EOF
 reversion
 
 mirror_ex Postgres-StORM SwiftORM
-mkdir Sources/PostgresStORM
-mv Sources/*.swift Sources/PostgresStORM
+repath PostgresStORM
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -663,6 +670,7 @@ EOF
 reversion
 
 mirror Perfect-Session-MySQL
+repath PerfectSessionMySQL
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -678,11 +686,12 @@ let package = Package( name: "PerfectSessionMySQL",
             dependencies: ["PerfectSession", "PerfectMySQL"]),
         .testTarget(
             name: "PerfectSessionMySQLTests",
-            dependencies: ["PerfectSessionMySQL"]),
+            dependencies: ["PerfectSessionMySQL"])])
 EOF
 reversion
 
 mirror Perfect-Session-PostgreSQL
+repath PerfectSessionPostgreSQL
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -698,7 +707,7 @@ let package = Package( name: "PerfectSessionPostgreSQL",
             dependencies: ["PerfectSession", "PerfectMySQL"]),
         .testTarget(
             name: "PerfectSessionPostgreSQLTests",
-            dependencies: ["PerfectSessionPostgreSQL"]),
+            dependencies: ["PerfectSessionPostgreSQL"])])
 EOF
 reversion
 
@@ -725,6 +734,7 @@ EOF
 reversion
 
 mirror Perfect-Session-SQLite
+repath PerfectSessionSQLite
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -740,7 +750,7 @@ let package = Package( name: "PerfectSessionSQLite",
             dependencies: ["PerfectSession", "SQLiteStORM"]),
         .testTarget(
             name: "PerfectSessionSQLiteTests",
-            dependencies: ["PerfectSessionSQLite"]),
+            dependencies: ["PerfectSessionSQLite"])])
 EOF
 reversion
 
