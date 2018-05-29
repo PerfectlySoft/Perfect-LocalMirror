@@ -670,7 +670,6 @@ EOF
 reversion
 
 mirror Perfect-Session-MySQL
-repath PerfectSessionMySQL
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -691,7 +690,6 @@ EOF
 reversion
 
 mirror Perfect-Session-PostgreSQL
-repath PerfectSessionPostgreSQL
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -734,7 +732,6 @@ EOF
 reversion
 
 mirror Perfect-Session-SQLite
-repath PerfectSessionSQLite
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
