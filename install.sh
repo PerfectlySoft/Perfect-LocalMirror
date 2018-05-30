@@ -42,6 +42,14 @@ function repath() {
 	mv Sources/*.swift Sources/$REPO
 }
 
+function localtest()
+{
+	tree
+	swift build
+	popd 
+	exit
+}
+
 mirror Perfect-LinuxBridge
 reversion
 
@@ -244,6 +252,19 @@ EOF
 reversion
 
 mirror_ex SwiftRandom iamjono
+tee Package.swift << EOF >> /dev/null
+// swift-tools-version:4.0
+import PackageDescription
+let package = Package(name: "SwiftRandom", 
+	products: [.library(name: "SwiftRandom",targets: ["SwiftRandom"]),],
+    dependencies: [
+	],
+    targets: [
+        .target(
+            name: "SwiftRandom",
+            dependencies: []),
+    ])
+EOF
 reversion
 
 mirror Perfect-RequestLogger
@@ -475,7 +496,7 @@ let package = Package(name: "PerfectCouchDB",
     targets: [
         .target(
             name: "PerfectCouchDB",
-            dependencies: ["PerfectCURL"]),
+            dependencies: ["PerfectCURL", "SwiftString"]),
     ])
 EOF
 reversion
@@ -559,10 +580,6 @@ reversion
 
 mirror Perfect-Notifications
 tee Package.swift << EOF >> /dev/null
-import PackageDescription
-let package = Package( name: "PerfectNotifications", dependencies:[
-      .Package(url: "$HUB/Perfect-HTTPServer", majorVersion: 3)
-    ])
 // swift-tools-version:4.0
 import PackageDescription
 let package = Package(name: "PerfectNotifications", 
@@ -717,6 +734,7 @@ EOF
 reversion
 
 mirror_ex CouchDB-StORM SwiftORM
+repath CouchDBStORM
 tee Package.swift << EOF >> /dev/null
 // swift-tools-version:4.0
 import PackageDescription
@@ -724,17 +742,18 @@ let package = Package( name: "CouchDBStORM",
 	products: [.library(name: "CouchDBStORM",targets: ["CouchDBStORM"]),],
 	dependencies: [
 		.package(url: "$HUB/StORM", .branch("master")),
-		.package(url: "$HUB/Perfect-MongoDB", .branch("master")),
+		.package(url: "$HUB/Perfect-CouchDB", .branch("master")),
 		.package(url: "$HUB/Perfect-Logger", .branch("master")),
 		.package(url: "$HUB/SwiftRandom", .branch("master")),
 	],
 	targets:[
         .target(
             name: "CouchDBStORM",
-            dependencies: ["StORM", "PerfectMongoDB", "PerfectLogger", "SwiftRandom"]),
+            dependencies: ["StORM", "PerfectCouchDB", "PerfectLogger", "SwiftRandom"]),
 	])
 EOF
 reversion
+localtest
 
 mirror_ex Postgres-StORM SwiftORM
 repath PostgresStORM
@@ -755,6 +774,7 @@ let package = Package( name: "PostgresStORM",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session
 tee Package.swift << EOF >> /dev/null
@@ -791,6 +811,7 @@ let package = Package( name: "PerfectSessionMySQL",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session-PostgreSQL
 repath PerfectSessionPostgreSQL
@@ -810,6 +831,7 @@ let package = Package( name: "PerfectSessionPostgreSQL",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session-Redis
 repath PerfectSessionRedis
@@ -829,6 +851,7 @@ let package = Package( name: "PerfectSessionRedis",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session-MongoDB
 tee Package.swift << EOF >> /dev/null
@@ -853,6 +876,7 @@ let package = Package( name: "PerfectSessionMongoDB",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session-SQLite
 repath PerfectSessionSQLite
@@ -872,6 +896,7 @@ let package = Package( name: "PerfectSessionSQLite",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-Session-CouchDB
 repath PerfectSessionCouchDB
@@ -891,6 +916,7 @@ let package = Package( name: "PerfectSessionCouchDB",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-OAuth2
 tee Package.swift << EOF >> /dev/null
@@ -908,6 +934,7 @@ let package = Package( name: "OAuth2",
 	])
 EOF
 reversion
+localtest
 
 mirror Perfect-LocalAuthentication-PostgreSQL
 tee Package.swift << EOF >> /dev/null
@@ -919,7 +946,7 @@ let package = Package(name: "PerfectLocalAuthentication",
       .package(url: "$HUB/JSONConfig", .branch("master")),
       .package(url: "$HUB/Perfect-RequestLogger", .branch("master")),
       .package(url: "$HUB/Perfect-SMTP", .branch("master")),
-      .package(url: "$HUB/lsStORM", .branch("master")),
+      .package(url: "$HUB/StORM", .branch("master")),
       .package(url: "$HUB/Perfect-Session-PostgreSQL", .branch("master")),
       .package(url: "$HUB/Perfect-Mustache", .branch("master")),
     ],
@@ -930,6 +957,7 @@ let package = Package(name: "PerfectLocalAuthentication",
     ])
 EOF
 reversion
+localtest
 
 mirror Perfect-LocalAuthentication-MySQL
 tee Package.swift << EOF >> /dev/null
@@ -952,6 +980,7 @@ let package = Package(name: "PerfectLocalAuthentication",
     ])
 EOF
 reversion
+localtest
 
 mirror PerfectTemplate
 repath PerfectTemplate
@@ -966,10 +995,11 @@ let package = Package(name: "PerfectTemplate",
     targets: [
         .target(
             name: "PerfectTemplate",
-            dependencies: []),
+            dependencies: ["PerfectHTTPServer"]),
     ])
 EOF
 reversion
+localtest
 
 # Clean up
 popd
